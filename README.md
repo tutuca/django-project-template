@@ -27,22 +27,70 @@ proyecto:
     $ virtualenv {{project_name}}
     $ source {{project_name}}/bin/activate
 
-Instale las dependencias necesarias:
+Modificar los parámetros de la base de datos
 
-    $ cd ~/Proyectos/{{project_name}} #el directorio donde hizo el clone 
-    $ pip install -r requirements.txt
+    #local_settings.py
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+        'NAME': 'fudepan',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+        }
+    }   
+
+> En producción local_settings.py debería tener DEBUG=False
     
-Corra el comando de django con este proyecto como template:
+# Inicializar la base de datos.
 
-    $ cd ~/Proyectos # ajuste este path a su preferencia
-    $ django-admin.py startproject {{project_name}}
+Primero es necesario crear los esquemas y ejecutar las migraciones si hacen falta:
     
-(Opcional) Sincronice la base de datos y comiense a ejecutar el proyecto:
+    $ ./manage.py migrate
 
-   $ cd {{project_name}}
-   $ python manage.py syncdb
-   ...
-   $ python runserver
+
+De realizarse cambios en algún modelo ejecutar:
+
+    $ ./manage.py makemigrations website
+
+Reemplazar *website* con la aplicación que necesitamos migrar
+
+En este punto tenemos nuestra instancia lista para correr el servidor de 
+desarrollo:
+
+    $ ./manage.py runserver
+
+# Assets státicos.
+
+Ahora queda generar los recursos de estilos, imágenes, íconos y scripts.
+Para esto integramos [grunt](http://gruntjs.com/) y [bower](http://bower.io/).
+
+Descargar las herramientas necesarias:
+
+    $ npm install  
+
+> a la fecha, grunt no incluye la interfaz de linea de comandos por defecto y 
+> necesita ser instalado separado.
+> para esto invocar:
+    $ npm install -g grunt-cli
+> utilizar *sudo* en caso que sea necesario
+
+Instalar las bibliotecas utilizadas
+
+    $ bower install
+
+Ejecutar las tareas de grunt:
+
+    $ grunt
+
+Por defecto grunt funciona en modo `watch`, esto es: queda observando los archivos importantes de manera de re-ejecutar las tareas pertinentes.
+
+Si sólo necesitamos `compilar` los recursos estáticos, invocar:
+
+    $ grunt build
+
+Ésto genera una carpeta `static/` en la raiz del proyecto, que podemos desplegar en nuestro servidor.
 
 > Nota: Este texto y la nota de licencia están incluidos en el molde y se 
 > aplicarán a todos los proyectos que cree con este método.
@@ -51,6 +99,8 @@ Corra el comando de django con este proyecto como template:
 
 Noticia de licencia
 ---------------
-{{project_name}} es software libre copyright 2012 de Matías Iturburu, 
-Martín Onetti y Francisco Herrero, distribuido bajo la licencia BSD. Una copia 
+© 2015 
+{{project_name}} es software libre de Matías Iturburu, Martín Onetti y Francisco Herrero,
+distribuido bajo la licencia BSD. Una copia 
 de esta licencia se incluye en el archivo COPYING.
+Instale las dependencias necesarias:
