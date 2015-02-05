@@ -1,0 +1,9 @@
+{
+  "name": "{{project_name}}",
+  "version": "0.3.2",
+  "dependencies": {
+    "require": "master",
+    "foundation": "zurb/bower-foundation",
+    "foundation-icons": "*"
+  }
+}

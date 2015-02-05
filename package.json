@@ -1,0 +1,23 @@
+{
+  "name": "{{project_name}}",
+  "version": "{{version}}",
+  "description": "{{description}}",
+  "main": "assets/js/app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "karma start"
+  },
+  "author": "{{author}}",
+  "license": "{{license}}",
+  "devDependencies": {
+    "node-sass": "*",
+    "grunt": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-sass": "*"
+  }
+}

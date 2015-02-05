@@ -1,0 +1,14 @@
+local_settings.py
+*~
+*.log
+*.csv
+*.sqlite3
+*.pyc
+*.scssc
+*.egg-info/*
+.sass-cache/*
+media/*
+*.gz
+static/*
+node_modules/*
+assets/lib/*

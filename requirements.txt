@@ -1,6 +1,5 @@
 Django
 PIL
-distribute
 django-debug-toolbar
-django-pagination
+django-endless-pagination
 psycopg2
