@@ -13,8 +13,7 @@ Algunas prestaciones de este molde son:
 - Configuraciones genericas para statics y media.
 - Algunos chiches más.
 
-Uso
----------------
+# Uso
 
 Clone el paquete en algun lugar accesible:
 
@@ -27,13 +26,23 @@ proyecto:
     $ virtualenv {{project_name}}
     $ source {{project_name}}/bin/activate
 
+Instale las dependencias necesarias:
+
+    $ cd ~/Proyectos/{{project_name}} #el directorio donde hizo el clone 
+    $ pip install -r requirements.txt
+    
+# Creando su proyecto
+
+    $ cd ~/Proyectos # ajuste este path a su preferencia
+    $ django-admin.py startproject {{project_name}}
+
 Modificar los parámetros de la base de datos
 
     #local_settings.py
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', 
-        'NAME': 'fudepan',
+        'NAME': '{{project_name}}',
         'USER': 'postgres',
         'PASSWORD': '',
         'HOST': '',
@@ -48,7 +57,6 @@ Modificar los parámetros de la base de datos
 Primero es necesario crear los esquemas y ejecutar las migraciones si hacen falta:
     
     $ ./manage.py migrate
-
 
 De realizarse cambios en algún modelo ejecutar:
 
