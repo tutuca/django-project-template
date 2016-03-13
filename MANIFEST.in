@@ -1,0 +1,7 @@
+include requirements.txt
+include README.md
+recursive-include static/ *
+recursive-include templates/ *
+exclude local_settings.py
+exclude ./fabfile.py
+exclude *.sqlite3

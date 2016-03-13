@@ -1,7 +1,6 @@
 {{project_name}}
 ===============
 
-
 Valiendonos de la prestación de django 1.4 para tomar un molde de proyecto, 
 y con la intención de formalizar algunas prácticas que a esta altura son
 rutinarias preparamos este molde.
@@ -83,10 +82,6 @@ Descargar las herramientas necesarias:
 > para esto invocar:
     $ npm install -g grunt-cli
 > utilizar *sudo* en caso que sea necesario
-
-Instalar las bibliotecas utilizadas
-
-    $ bower install
 
 Ejecutar las tareas de grunt:
 
