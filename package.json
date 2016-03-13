@@ -2,16 +2,16 @@
   "name": "{{project_name}}",
   "version": "{{version}}",
   "description": "{{description}}",
-  "homepage": "https://github.com/machinalis/{{project_name}}",
+  "homepage": "https://github.com/{{author}}/{{project_name}}",
   "author": "{{author}}",
   "license": "{{license}}",
   "main": "static/main.js",
   "bugs": {
-    "url": "https://github.com/machinalis/{{project_name}}/issues"
+    "url": "https://github.com/{{author}}/{{project_name}}/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/machinalis/{{project_name}}.git"
+    "url": "https://github.com/{{author}}/{{project_name}}.git"
   },
   "scripts": {
     "start": "grunt",
@@ -20,9 +20,9 @@
   "dependencies": {
     "jquery": "*",
     "lodash": "*",
-    "underscore.string": "*"
+    "underscore.string": "*",
     "bootstrap-sass": "*",
-    "font-awesome": "*",
+    "font-awesome": "*"
   },
   "devDependencies": {
     "babel-core": "latest",
