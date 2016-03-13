@@ -4,3 +4,6 @@ pyreadline
 django-debug-toolbar
 Sphinx
 alabaster
+django-extensions
+pylint
+pep8

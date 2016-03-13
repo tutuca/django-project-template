@@ -30,6 +30,7 @@
     "babel-loader": "latest",
     "babel-preset-react": "latest",
     "babel-preset-es2015": "latest",
+    "stylelint": "*",
     "eslint": "latest",
     "grunt": "*",
     "grunt-contrib-concat": "*",
