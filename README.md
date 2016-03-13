@@ -1,41 +1,43 @@
 {{project_name}}
 ===============
 
-Valiendonos de la prestación de django 1.4 para tomar un molde de proyecto, 
-y con la intención de formalizar algunas prácticas que a esta altura son
-rutinarias preparamos este molde.
+> Note: This is just template text, please adjust to your needs
 
-Algunas prestaciones de este molde son:
+This is a project template to be used to kickstart a django based website.
 
-- Incluye templates y estilos genericos.
-- Incluye django debug toolbar, pagination.
-- Configuraciones genericas para statics y media.
-- Algunos chiches más.
+This template includes:
 
-# Uso
+- A base layout and bootstrap scaffolding.
+- Dev tools such as ipdb or django-debug-toolbar.
+- A modern toolchain for javascript and sass.
+- Some random sugar.
 
-Clone el paquete en algun lugar accesible:
+# Ussage
 
-    $ git clone git://github.com/Inventta/django-project-template.git
+Clone this package:
 
-Cree y active un [entorno virtual](http://pypi.python.org/pypi/virtualenv) para el 
-proyecto:
+    $ git clone git://github.com/tutuca/django-project-template.git
 
-    $ cd ~/venvs/ # adapte este path a su preferencia
-    $ virtualenv {{project_name}}
+Setup and activate a [virtual environment](http://pypi.python.org/pypi/virtualenv):
+
+    $ cd ~/venvs/ # or wherever you want
+    $ virtualenv {{project_name}} -ppython3
     $ source {{project_name}}/bin/activate
 
-Instale las dependencias necesarias:
+Setup your python dependencies:
 
-    $ cd ~/Proyectos/{{project_name}} #el directorio donde hizo el clone 
-    $ pip install -r requirements.txt
-    
-# Creando su proyecto
+    ({{project_name}})$ cd ~/Projects/{{project_name}} # wherever you cloned this
+    ({{project_name}})$ pip install -r requirements.txt
 
-    $ cd ~/Proyectos # ajuste este path a su preferencia
-    $ django-admin.py startproject {{project_name}}
+Install the package in development mode:
 
-Modificar los parámetros de la base de datos
+    ({{project_name}})$ python setup.py develop
+
+# Create a blank application
+
+    $ django-admin.py startapp  <app_name>
+
+Add it to `INSTALLED_APPS` in `{{project_name}}/settings.py` and define your environment settings in a blank `{{project_name}}/local_settings.py`.
 
     #local_settings.py
     DATABASES = {
@@ -49,61 +51,49 @@ Modificar los parámetros de la base de datos
         }
     }   
 
-> En producción local_settings.py debería tener DEBUG=False
+# Initialize your database as usual.
+
+First create your schemas and run default migrations:
     
-# Inicializar la base de datos.
+    $ {{project_name}} migrate
 
-Primero es necesario crear los esquemas y ejecutar las migraciones si hacen falta:
-    
-    $ ./manage.py migrate
+> Note that `{{project_name}}` is django's usual management wrapper made 
+> available session-wide by setup tools.
 
-De realizarse cambios en algún modelo ejecutar:
+Whenever you made further changes to your models run:
 
-    $ ./manage.py makemigrations website
+    $ {{project_name}} makemigrations <app_name>
 
-Reemplazar *website* con la aplicación que necesitamos migrar
+# Static assets toolchain.
 
-En este punto tenemos nuestra instancia lista para correr el servidor de 
-desarrollo:
+We rely on [npm](http://npmjs.org) and [grunt](http://gruntjs.com/) to handle the static assets dependency management and build tasks. Under the hood it is using:
 
-    $ ./manage.py runserver
+- [webpack](http://webpack.github.io/): Javascript bundle
+- [babel](https://babeljs.io/): JS Compiler, allowes us to use ecmascript 6 syntax.
+- [sass](http://sass-lang.com/): CSS compiler, allowes us to use variables and mixins.
+- [bootstrap](http://getbootstrap.com/): In it's official sass port, it is the most widely used layout framework with a large variety of built-in components.
 
-# Assets státicos.
+While using this tools should be transparent to you as dev. Knowing their roles, uses and pitfals will help you write better code (and to fix them if they brake :).
 
-Ahora queda generar los recursos de estilos, imágenes, íconos y scripts.
-Para esto integramos [grunt](http://gruntjs.com/) y [bower](http://bower.io/).
+We also ship [eslint](http://eslint.org/) and [stylelint](http://stylelint.io/).
 
-Descargar las herramientas necesarias:
+To install the required tools and libraries use:
 
     $ npm install  
 
-> a la fecha, grunt no incluye la interfaz de linea de comandos por defecto y 
-> necesita ser instalado separado.
-> para esto invocar:
-    $ npm install -g grunt-cli
-> utilizar *sudo* en caso que sea necesario
-
-Ejecutar las tareas de grunt:
+Then you may run:
 
     $ grunt
 
-Por defecto grunt funciona en modo `watch`, esto es: queda observando los archivos importantes de manera de re-ejecutar las tareas pertinentes.
+By default this is run in `watch` mode and will listen for changes in the `assets` folder as well as `package.json` and `Grunfile.js` files.
 
-Si sólo necesitamos `compilar` los recursos estáticos, invocar:
+This will populate the `static/` folder which will be served by django's development server.
 
-    $ grunt build
+Now you are ready to run the development server:
 
-Ésto genera una carpeta `static/` en la raiz del proyecto, que podemos desplegar en nuestro servidor.
+    $ {{project_name}} runserver
 
-> Nota: Este texto y la nota de licencia están incluidos en el molde y se 
-> aplicarán a todos los proyectos que cree con este método.
-> Recomendamos con énfasis modificar estos textos para adaptarlos a su entorno.
-
-
-Noticia de licencia
+Licence notice:
 ---------------
-© 2015 
-{{project_name}} es software libre de Matías Iturburu, Martín Onetti y Francisco Herrero,
-distribuido bajo la licencia BSD. Una copia 
-de esta licencia se incluye en el archivo COPYING.
-Instale las dependencias necesarias:
+© 2016 {{project_name}} - {{author}},
+A copy of the project licence is available at COPYING.
