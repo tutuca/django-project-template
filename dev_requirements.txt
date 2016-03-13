@@ -1,0 +1,6 @@
+-r requirements.txt
+ipdb
+pyreadline
+django-debug-toolbar
+Sphinx
+alabaster

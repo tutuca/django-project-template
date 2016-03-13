@@ -1,5 +1,4 @@
+djangorestframework
+django-filter
 Django
 PIL
-django-debug-toolbar
-django-endless-pagination
-psycopg2
