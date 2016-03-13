@@ -1,123 +1,118 @@
-module.exports = function(grunt) {
-  'use strict';
-  grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+var webpack = require('webpack');
 
-    sass: {
-      options: {
-        includePaths: [
-          './assets/lib/foundation/scss',
-          './assets/lib/foundation-icon-fonts',
-        ]
-      },
-      dist: {
-        options: {
-          outputStyle: 'compressed'
+module.exports = function (grunt) {
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        lib: './node_modules',
+        src: './assets',
+        out: './build',
+        module: {
+          loaders: [
+            {
+              test: /\.(js$|jsx)$/,
+              exclude: /node_modules/,
+              loader: 'babel',
+              query: {
+                presets: ['es2015']
+              }
+            }
+          ]
         },
-        files: {
-          './static/css/app.css': './assets/scss/app.scss'
-        }        
-      }
-    },
-    copy: {
-      main: {
-        files: [
-          {
-            flatten:true,
-            cwd: './assets/lib/katex/fonts',
-            src: ['**'],
-            dest: './static/css/fonts/',
-            expand: true
-          },
-          {
-            flatten:true,
-            cwd: './assets/lib/foundation-icon-fonts',
-            src: ['*.ttf', '*.eot', '*.svg', '*.woff'],
-            dest: './static/css/fonts/',
-            expand: true
-          },
-        ]
-      }
-    },
-    concat: {
-      options: {
-        separator: ';',
-      },
-      lib: {
-        src: [
-          './assets/lib/foundation/js/vendor/modernizr.js',
-          './assets/lib/foundation/js/vendor/jquery.js',
-          './assets/lib/foundation/js/vendor/fastclick.js',
-          './assets/lib/foundation/js/foundation.js',
-          './assets/lib/katex/katex.min.js'
-        ],
-        dest: './static/js/lib.js'
-
-      },
-      main: {
-        src: [
-          './assets/js/app.js'
-        ],
-        dest: './static/js/app.js'
-      },
-      css: {
-        src: [ 
-          './assets/lib/katex/*.css',
-          './static/css/app.css',
-        ],
-        dest: './static/css/app.css'
-      }
-    },
-    uglify: {
-      options: {
-        mangle: true,
-        sourceMap: true,
-      },
-      main: {
-        files: {
-          './static/js/app.min.js': './static/js/app.js',
+        sass: {
+            options: {
+                includePaths: [
+                    '<%= lib%>/bootstrap-sass/assets/stylesheets',
+                    '<%= lib%>/font-awesome/scss/',
+                ]
+            },
+            dist: {
+                options: {
+                    outputStyle: 'compact'
+                },
+                files: {
+                    '<%= out%>/css/all.css': '<%= src%>/scss/all.scss'
+                }
+            }
+        },
+        copy: {
+            main: {
+                files: [
+                   {
+                      flatten: true,
+                      cwd: '<%= lib%>/font-awesome/fonts/',
+                      src: ['*.ttf', '*.eot', '*.svg', '*.woff', '*.woff2'],
+                      dest: '<%= out%>/fonts/',
+                      expand: true
+                    },
+                    {
+                      flatten: true,
+                      cwd: '<%= src%>/img/',
+                      src: ['*.png', '*.jpg', '*.gif'],
+                      dest: '<%= out%>/img/',
+                      expand: true
+                    },
+                    {
+                      flatten: true,
+                      cwd: '<%= lib%>/bootstrap-sass/assets/fonts/bootstrap',
+                      src: ['*.ttf', '*.eot', '*.svg', '*.woff', '*.woff2'],
+                      dest: '<%= out%>/fonts/bootstrap/',
+                      expand: true
+                    },
+                ]
+            }
+        },
+        webpack: {
+            main: {
+                entry: {
+                    main: "<%= src%>/js/main.js"
+                },
+                output: {
+                    path: "<%= out%>/js",
+                    filename: "main.js",
+                },
+                devtool: 'source-map',
+                watch: true,
+                module: '<%= module%>'
+            },
+            prod: {
+                entry: {
+                    main: "<%= src%>/main.js"
+                },
+                output: {
+                    path: "<%= out%>/js",
+                    filename: "main.min.js",
+                },
+                module: '<%= module%>',
+                devtool: 'source-map',
+                plugins: [
+                    new webpack.optimize.UglifyJsPlugin(),
+                ]
+            }
+        },
+        watch: {
+            scss: {
+                files: [
+                    '<%= src%>/scss/*.scss'
+                ],
+                tasks: ['sass']
+            },
+            config: {
+                files: [
+                    'Gruntfile.js',
+                    'bower.json',
+                    'package.json'
+                ],
+                tasks: ['dev-build']
+            }
         }
-      }
-    },
-    watch: {
-      lib: {
-        files: ['./assets/lib/**/*.js'],
-        tasks: ['concat:lib']
-      },
-      config: {
-        files: [
-          'Gruntfile.js',
-          'bower.json',
-          'package.json'
-        ],
-        tasks: ['copy', 'concat', 'sass']
-      },
-      main: {
-        files: [
-         //watched files
-          './assets/js/app.js'
-        ],   
-        tasks: ['concat:main'],
-        options: {
-          livereload: true
-        }
-      },
-      sass: {
-        files: './assets/scss/**/*.scss',
-        tasks: ['sass']
-      },
-
-    }
-  });
-  // Plugin loading
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-sass');
-
-  // Task definition
-  grunt.registerTask('build', ['copy', 'sass', 'concat', 'uglify']);
-  grunt.registerTask('default', ['build', 'watch']);
-
+    });
+    // Plugin loading
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-webpack');
+    // Task definition
+    grunt.registerTask('build', ['webpack:main', 'webpack:prod', 'copy', 'sass']);
+    grunt.registerTask('dev-build', ['webpack:main', 'copy', 'sass', 'watch']);
+    grunt.registerTask('default', ['dev-build']);
 };
