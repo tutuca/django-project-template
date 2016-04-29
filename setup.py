@@ -18,7 +18,7 @@ setup(
     include_package_data=True,
     packages=find_packages('src'),
     package_dir={'': 'src'},
-    install_requires=[str(r.req) for r in REQUIEREMENTS],
+    install_requires=[str(r.req) for r in REQUIREMENTS],
     entry_points={
         'console_scripts': [
             'manage = {{project_name}}.manage:do_manage',
