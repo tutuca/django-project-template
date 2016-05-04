@@ -16,9 +16,8 @@ setup(
     description='{{description}}',
     long_description=README,
     include_package_data=True,
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
-    install_requires=[str(r.req) for r in REQUIEREMENTS],
+    packages=find_packages('{{project_name}}'),
+    install_requires=[str(r.req) for r in requirements],
     entry_points={
         'console_scripts': [
             'manage = {{project_name}}.manage:do_manage',
