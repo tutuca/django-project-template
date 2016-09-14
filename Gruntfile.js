@@ -5,7 +5,7 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         lib: './node_modules',
         src: './assets',
-        out: './build',
+        out: './static',
         module: {
           loaders: [
             {
